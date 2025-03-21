@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8" />
+	<title>Example Of Loop</title>
+</head>
+<body>
+	<h1>Going to traverse element in collection</h1>
+	<h1 th:text="${names}" ></h1>
+	
+	<ul>
+		<li th:each="n, status : ${names}" >
+			<span th:style="${status.odd} ? 'font-weight : bold' : 'color:blue;font-weight : bold;'" th:text="${status.index+1}+' '+${n}"></span>
+		</li>
+	</ul>
+</body>
+</html>
+
+
+
+<!-- 
+
+
+
+Common Status Methods in Thymeleaf
+Method	Description
+index	Returns the zero-based index (0, 1, 2, …) of the current iteration.
+count	Returns the one-based index (1, 2, 3, …) of the current iteration.
+size	Returns the total size of the iterated collection.
+current	Returns the current element in the iteration.
+even	Returns true if the current index is even (0, 2, 4, …).
+odd	Returns true if the current index is odd (1, 3, 5, …).
+first	Returns true if it is the first iteration.
+last	Returns true if it is the last iteration.
+
+
+
+
+
+
+Example Usage in Thymeleaf
+
+<table border="1">
+    <tr>
+        <th>Index</th>
+        <th>Count</th>
+        <th>Value</th>
+        <th>Even?</th>
+        <th>First?</th>
+        <th>Last?</th>
+    </tr>
+    <tr th:each="item, stat : ${items}">
+        <td th:text="${stat.index}"></td>   
+        <td th:text="${stat.count}"></td>   
+        <td th:text="${item}"></td>         
+        <td th:text="${stat.even}"></td>   
+        <td th:text="${stat.first}"></td>   
+        <td th:text="${stat.last}"></td>    
+    </tr>
+</table>
+
+
+
+Use Cases
+Highlighting Even/Odd Rows
+
+<tr th:each="item, stat : ${items}" th:class="${stat.even} ? 'even-row' : 'odd-row'">
+
+
+Disabling Previous/Next Buttons
+
+<button th:disabled="${stat.first}">Previous</button>
+<button th:disabled="${stat.last}">Next</button>
+
+
+
+
+Displaying Serial Numbers
+
+<p th:text="'Serial No: ' + ${stat.count}"></p>
+
+
+
+
+ -->
