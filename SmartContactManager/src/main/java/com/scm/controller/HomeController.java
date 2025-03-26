@@ -25,6 +25,12 @@ public class HomeController {
 		return "about";
 	}
 	
+	@RequestMapping("/login")
+	public String login(Model model) {
+		model.addAttribute("title", "Login-SCM");
+		return "login";
+	}
+	
 	@RequestMapping("/signup")
 	public String signup(Model model) {
 		model.addAttribute("title", "Register-SCM");
