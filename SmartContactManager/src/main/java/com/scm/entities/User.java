@@ -14,6 +14,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.AssertTrue;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "users")
@@ -22,9 +26,13 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 	
+	@NotBlank(message = "Name field should be required")
+	@Size(min = 2, max = 20, message = "min 2 and max 20 character allowed.")
+	@Column(length = 20, nullable = false)
 	private String name;
 	
 	@Column(unique = true)
+	@Email(regexp = "^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+$")
 	private String email;
 	
 	private String password;
@@ -32,7 +40,11 @@ public class User {
 	private boolean enabled;
 	private String imageUrl;
 	
+//	@AssertTrue(message = "Must agree terms and condition")
+//    private boolean agreed;
+	
 	@Column(length = 500)
+	@Size(min = 5, message = "min size 5 character required")
 	private String about;
 	
 	
@@ -114,6 +126,13 @@ public class User {
 	public void setContacts(List<Contact> contacts) {
 		this.contacts = contacts;
 	}
+	
+//	public boolean isAgreed() {
+//		return agreed;
+//	}
+//	public void setAgreed(boolean agreed) {
+//		this.agreed = agreed;
+//	}
 
 	@Override
 	public String toString() {

@@ -1,67 +1,93 @@
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
-      th:replace="base::layout(~{::section})">
+	th:replace="base::layout(~{::section})">
 <head>
-    <meta charset="UTF-8" />
-    <title>SignUp</title>
+<meta charset="UTF-8" />
+<title>SignUp</title>
 </head>
 <body>
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-8 offset-md-2">
-                    <div class="my-card mt-2">
-                    
-                        <!-- Session Message Handling -->
-                        <div th:if="${session.message}" th:classappend="${session.message.type}" class="alert" role="alert">
-                            <p class="text-center" th:text="${session.message.content}"></p>
-                            <th:block th:remove="all"></th:block>
-                        </div>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8 offset-md-2">
+					<div class="my-card mt-2">
 
-                        <div class="container text-center">
-                            <img style="width: 80px;" th:src="@{/images/note.png}" alt="Logo" />
-                        </div>
-                        <h1 class="text-center">SignUp Here</h1>
+						<!-- Session Message Handling -->
+						<div th:if="${session.message}"
+							th:classappend="${session.message.type}" class="alert"
+							role="alert">
+							<p class="text-center" th:text="${session.message.content}"></p>
+							<th:block th:remove="all"></th:block>
+						</div>
 
-                        <form th:action="@{/do_register}" method="post" th:object="${user}">
-                        
-                            <div class="form-group">
-                                <label for="name">Your Name</label>
-                                <input name="name" th:field="*{name}" type="text" class="form-control" id="name" placeholder="Enter Here" required>
-                            </div>
-                             
-                            <div class="form-group">
-                                <label for="email">Your Email</label>
-                                <input name="email" th:field="*{email}" type="email" class="form-control" id="email" placeholder="Enter Here" required>
-                            </div>
-                             
-                            <div class="form-group">
-                                <label for="password">Your Password</label>
-                                <input name="password" th:field="*{password}" type="password" class="form-control" id="password" placeholder="Enter Here" required>
-                            </div>
-                             
-                            <div class="form-group">
-                                <label for="about">About You</label>
-                                <textarea name="about" th:field="*{about}" placeholder="Enter Something About Yourself" rows="5" class="form-control"></textarea>
-                            </div>
-                             
-                            <div class="form-group form-check text-center">
-                                <input type="checkbox" id="agreement" class="form-check-input" name="agreement"/>
-                                <label for="agreement">Accept Terms and Conditions</label>
-                            </div>
-                             
-                            <div class="container text-center">
-                                <button type="submit" class="btn bg-success text-white">Submit</button>
-                                <button type="reset" class="btn bg-danger text-white">Reset</button>
-                            </div>
-                             
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+						<div class="container text-center">
+							<img style="width: 80px;" th:src="@{/images/note.png}" alt="Logo" />
+						</div>
+						<h1 class="text-center">SignUp Here</h1>
+
+						<form novalidate th:action="@{/do_register}" method="post"
+							th:object="${user}">
+
+							<div class="form-group">
+								<label for="name">Your Name</label> 
+								<input name="name"
+									th:field="*{name}" type="text" 
+									class="form-control" 
+									th:classappend="${#fields.hasErrors('name')} ? 'is-invalid' : ''"
+									id="name"
+									placeholder="Enter Here" required>
+								
+								<div th:each="e : ${#fields.errors('name')}" th:text="${e}"
+									id="validationServer03Feedback" class="invalid-feedback"></div>
+							</div>
+
+							<div class="form-group">
+								<label for="email">Your Email</label> <input name="email"
+									th:field="*{email}" type="email" class="form-control"
+									th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+									id="email" placeholder="Enter Here" required>
+									
+									<div th:each="e : ${#fields.errors('email')}" th:text="${e}"
+									id="validationServer03Feedback" class="invalid-feedback"></div>
+							</div>
+
+							<div class="form-group">
+								<label for="password">Your Password</label> <input
+									name="password" th:field="*{password}" type="password"
+									class="form-control" 
+									id="password" placeholder="Enter Here"
+									required>
+							</div>
+
+							<div class="form-group">
+								<label for="about">About You</label>
+								<textarea name="about" th:field="*{about}"
+									placeholder="Enter Something About Yourself" rows="5"
+									class="form-control"
+									th:classappend="${#fields.hasErrors('about')} ? 'is-invalid' : ''"
+									></textarea>
+									
+									<div th:each="e : ${#fields.errors('about')}" th:text="${e}"
+									id="validationServer03Feedback" class="invalid-feedback"></div>
+							</div>
+
+							<div class="form-group form-check text-center">
+								<input type="checkbox" id="agreement" class="form-check-input"
+									name="agreement" /> <label for="agreement">Accept
+									Terms and Conditions</label>
+							</div>
+
+							<div class="container text-center">
+								<button type="submit" class="btn bg-success text-white">Submit</button>
+								<button type="reset" class="btn bg-danger text-white">Reset</button>
+							</div>
+
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
 </body>
 </html>
-					
-							 
+
