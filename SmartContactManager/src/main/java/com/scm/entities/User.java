@@ -42,6 +42,10 @@ public class User {
 	private boolean enabled;
 	private String imageUrl;
 	
+	@Column(nullable = false)
+	private boolean agreed = false;
+
+	
 //	@AssertTrue(message = "Must agree terms and condition")
 //    private boolean agreed;
 	
