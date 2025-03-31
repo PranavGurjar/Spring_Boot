@@ -1,5 +1,7 @@
 package com.scm.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -17,7 +19,7 @@ import com.scm.entities.Contact;
 import com.scm.entities.User;
 import com.scm.helper.Message;
 
-import jakarta.servlet.http.HttpSession;
+
 import jakarta.validation.Valid;
 
 @Controller
