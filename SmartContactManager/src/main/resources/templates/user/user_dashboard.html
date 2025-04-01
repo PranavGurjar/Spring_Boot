@@ -1,11 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	th:replace="/user/base::layout(~{::section})">
 <head>
-	<meta charset="UTF-8" />
-	<title>User Dashboard</title>
+<meta charset="UTF-8" />
+<title>User Dashboard</title>
 </head>
 <body>
-	<h1>Welcome To Dashboard</h1>
-	<h1>You are normal user</h1>
+	<section>
+		<h1>Welcome To Dashboard</h1>
+		<h1>You are normal user</h1>
+		<h1>User Name : <span th:text="${user.name}"></span></h1>
+		<h1>User Id : <span th:text="${user.id}"></span></h1>
+		<h1>User Email : <span th:text="${user.email}"></span></h1>
+		<h1>User Password : <span th:text="${user.password}"></span></h1>
+		<h1>User Role : <span th:text="${user.role}"></span></h1>
+		<h1>User Enabled : <span th:text="${user.enabled}"></span></h1>
+		<h1>User ImageUrl : <span th:text="${user.imageUrl}"></span></h1>
+		<h1>User About : <span th:text="${user.about}"></span></h1>
+		<h1>User Contracts : <span th:text="${user.contacts}"></span></h1>
+		<h1><a href="" th:href="@{/logout}" >Logout</a></h1>
+	</section>
 </body>
 </html>
