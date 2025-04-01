@@ -43,7 +43,7 @@ public class HomeController {
 		return "about";
 	}
 
-	@RequestMapping("/login")
+	@RequestMapping("/signin")
 	public String login(Model model) {
 		model.addAttribute("title", "Login-SCM");
 		return "login";
