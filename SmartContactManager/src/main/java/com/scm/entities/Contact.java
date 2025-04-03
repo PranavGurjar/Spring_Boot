@@ -74,13 +74,13 @@ public class Contact {
 		this.phone = phone;
 	}
 
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
-	}
+//	public String getImage() {
+//		return image;
+//	}
+//
+//	public void setImage(String image) {
+//		this.image = image;
+//	}
 
 	public String getDescription() {
 		return description;
@@ -97,6 +97,14 @@ public class Contact {
 	public void setUser(User user) {
 		this.user = user;
 	}
+
+//	@Override
+//	public String toString() {
+//		return "Contact [cId=" + cId + ", name=" + name + ", nickName=" + nickName + ", work=" + work + ", email="
+//				+ email + ", phone=" + phone + ", image=" + image + ", description=" + description + ", user=" + user
+//				+ "]";
+//	}
+	
 	
 	
 }

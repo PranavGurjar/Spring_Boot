@@ -5,7 +5,9 @@ import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.scm.dao.UserRepository;
@@ -40,12 +42,26 @@ public class UserController {
 	
 	
 	//add contact handler
-	@RequestMapping("/addContact")
+	@GetMapping("/addContact")
 	public String addContactForm(Model model) {
 		model.addAttribute("title", "Add Contact");
 		model.addAttribute("contact", new Contact());
 		return "user/addContact";
 	}
 	
-	
+	//process add contact form
+	@PostMapping("/processContact")
+	public String processContact(@ModelAttribute("contact") Contact contact, Principal principal ) {
+		
+		String name = principal.getName();
+		User user = this.userRepository.getUserByUserName(name);
+		
+		contact.setUser(user);
+		user.getContacts().add(contact);
+		this.userRepository.save(user);
+		
+		System.out.println("Data : "+contact);
+		System.out.println("Added to data base");
+		return "/user/addContact";
+	}
 }
