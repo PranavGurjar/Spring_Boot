@@ -1,14 +1,22 @@
 package com.scm.controller;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.scm.dao.UserRepository;
 import com.scm.entities.Contact;
@@ -51,17 +59,39 @@ public class UserController {
 	
 	//process add contact form
 	@PostMapping("/processContact")
-	public String processContact(@ModelAttribute("contact") Contact contact, Principal principal ) {
+	public String processContact(@ModelAttribute("contact") Contact contact, @RequestParam MultipartFile file, Principal principal ) {
 		
-		String name = principal.getName();
-		User user = this.userRepository.getUserByUserName(name);
+		try {
+			String name = principal.getName();
+			User user = this.userRepository.getUserByUserName(name);
+			
+			//processing and uploading file
+			if(file.isEmpty()) {
+				System.out.println("File is empty!");
+			}else {
+				//upload file in folder process
+				contact.setName(file.getOriginalFilename());
+				File saveFile = new ClassPathResource("/static/images").getFile();
+				//for file path know
+				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				System.out.println("Image is Uploaded!");
+			}
+			
+			contact.setUser(user);
+			user.getContacts().add(contact);
+			
+			
+			
+			this.userRepository.save(user);
+			
+			System.out.println("Data : "+contact);
+			System.out.println("Added to data base");
+		}catch(Exception e) {
+			System.out.println("Error : "+e.getMessage());
+			e.printStackTrace();
+		}
 		
-		contact.setUser(user);
-		user.getContacts().add(contact);
-		this.userRepository.save(user);
-		
-		System.out.println("Data : "+contact);
-		System.out.println("Added to data base");
 		return "/user/addContact";
 	}
 }
