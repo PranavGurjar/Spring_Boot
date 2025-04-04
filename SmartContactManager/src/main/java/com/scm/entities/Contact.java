@@ -7,6 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="contacts")
@@ -25,6 +28,12 @@ public class Contact {
 	
 	@ManyToOne
 	private User user;
+	
+	
+	@Transient // Optional: prevents Hibernate from persisting this field
+	private MultipartFile imageFile;
+
+	
 
 	public int getcId() {
 		return cId;
@@ -97,14 +106,6 @@ public class Contact {
 	public void setUser(User user) {
 		this.user = user;
 	}
-
-//	@Override
-//	public String toString() {
-//		return "Contact [cId=" + cId + ", name=" + name + ", nickName=" + nickName + ", work=" + work + ", email="
-//				+ email + ", phone=" + phone + ", image=" + image + ", description=" + description + ", user=" + user
-//				+ "]";
-//	}
-	
 	
 	
 }

@@ -7,6 +7,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
+//import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Controller;
@@ -57,9 +59,15 @@ public class UserController {
 		return "user/addContact";
 	}
 	
+	@GetMapping("/processContact")
+    public String handleInvalidGetRequest() {
+        return "redirect:/user/addContact"; // Prevents 405 error when accessing this URL directly
+    }
+	
 	//process add contact form
+//	@Transactional
 	@PostMapping("/processContact")
-	public String processContact(@ModelAttribute("contact") Contact contact, @RequestParam MultipartFile file, Principal principal ) {
+	public String processContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file, Principal principal ) {
 		
 		try {
 			String name = principal.getName();
@@ -70,7 +78,7 @@ public class UserController {
 				System.out.println("File is empty!");
 			}else {
 				//upload file in folder process
-				contact.setName(file.getOriginalFilename());
+				contact.setImage(file.getOriginalFilename());
 				File saveFile = new ClassPathResource("/static/images").getFile();
 				//for file path know
 				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
