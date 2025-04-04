@@ -7,6 +7,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 
+import javax.servlet.http.HttpSession;
+
+
+
 //import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.scm.dao.UserRepository;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
+import com.scm.helper.Message;
 
 @Controller
 @RequestMapping("/user")
@@ -67,11 +72,16 @@ public class UserController {
 	//process add contact form
 //	@Transactional
 	@PostMapping("/processContact")
-	public String processContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file, Principal principal ) {
+	public String processContact(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file, 
+			Principal principal, HttpSession session ) {
 		
 		try {
 			String name = principal.getName();
 			User user = this.userRepository.getUserByUserName(name);
+			
+			/*
+			 * if(3>2) { throw new Exception(); }
+			 */
 			
 			//processing and uploading file
 			if(file.isEmpty()) {
@@ -94,10 +104,18 @@ public class UserController {
 			this.userRepository.save(user);
 			
 			System.out.println("Data : "+contact);
-			System.out.println("Added to data base");
+			System.out.println("Added to database");
+			
+			//success message
+			session.setAttribute("message", new Message("Your contact is added!! Add more...","success"));
+			
 		}catch(Exception e) {
 			System.out.println("Error : "+e.getMessage());
 			e.printStackTrace();
+			
+			//error message
+			session.setAttribute("message", new Message("Something went wrong!! try again...","danger"));
+			
 		}
 		
 		return "/user/addContact";
