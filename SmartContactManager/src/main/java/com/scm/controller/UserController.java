@@ -6,6 +6,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.scm.dao.ContactRepository;
 import com.scm.dao.UserRepository;
 import com.scm.entities.Contact;
 import com.scm.entities.User;
@@ -35,6 +37,9 @@ public class UserController {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private ContactRepository contactRepository;
 	
 	@ModelAttribute
 	public void addCommonData(Model model, Principal principal) {
@@ -119,5 +124,22 @@ public class UserController {
 		}
 		
 		return "/user/addContact";
+	}
+	
+	//show contact handler
+	@GetMapping("/showContact")
+	public String showContact(Model model, Principal principal) {              
+		model.addAttribute("title", "Show Contacts");
+		
+		//show contact list
+		String userName = principal.getName();
+		User user = this.userRepository.getUserByUserName(userName);	
+		
+//		List<Contact> contacts = user.getContacts();
+		
+		List<Contact> contacts = this.contactRepository.findContactsByUser(user.getId());
+		model.addAttribute("contacts", contacts);
+		
+		return "/user/showContact";
 	}
 }
