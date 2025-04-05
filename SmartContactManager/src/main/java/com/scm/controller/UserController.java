@@ -95,6 +95,7 @@ public class UserController {
 			//processing and uploading file
 			if(file.isEmpty()) {
 				System.out.println("File is empty!");
+				contact.setImage("contact.png");
 			}else {
 				//upload file in folder process
 				contact.setImage(file.getOriginalFilename());
