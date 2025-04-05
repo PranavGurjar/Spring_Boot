@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
 
@@ -152,5 +153,16 @@ public class UserController {
 		model.addAttribute("totalPages", contacts.getTotalPages());
 		
 		return "/user/showContact";
+	}
+	 
+	//showing particular contact details
+	@RequestMapping("/{cId}/contact")
+	public String showContactDetails(Model model, @PathVariable("cId") Integer cId) {
+		model.addAttribute("title", "Contact Detail");
+		System.out.println("CID : "+cId);
+		Optional<Contact> contactOptional = this.contactRepository.findById(cId);
+		Contact contact = contactOptional.get();
+		model.addAttribute("contact", contact);
+		return "/user/contactDetail";
 	}
 }
