@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -214,5 +215,13 @@ public class UserController {
 		model.addAttribute("contact", contact);
 		
 		return "/user/updateForm";
+	}
+	
+	//update contact handler
+	@RequestMapping(value = "processUpdate", method = RequestMethod.POST)
+	public String updateHandler(@ModelAttribute Contact contact) {
+		System.out.println("Contact Id : "+contact.getcId());
+		System.out.println("Contact Name : "+contact.getName());
+		return " ";
 	}
 }
