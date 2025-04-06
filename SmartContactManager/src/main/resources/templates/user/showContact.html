@@ -39,8 +39,8 @@
 					      </td>
 					      <td th:text="${c.phone}">+91 8329401951</td>
 					      <td>
-					      	<button class="btn btn-danger btn-sm">Delete</button>
-					      	<button class="btn btn-primary btn-sm">Update</button>
+					      	<a href="#" th:onclick="|deleteContact(${c.cId})|" class="btn btn-danger btn-sm">Delete</a> <!-- th:href="@{'/user/delete/'+${c.cId}}" -->
+					      	<a th:href="@{'/user/update/'+${c.cId}}" class="btn btn-primary btn-sm">Update</a>
 					      </td>
 					    </tr>
 					    

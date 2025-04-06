@@ -173,4 +173,45 @@ public class UserController {
 		
 		return "/user/contactDetail";
 	}
+	
+	@GetMapping("/delete/{cid}")
+	public String deleteContact(@PathVariable("cid") Integer cId, Model model, HttpSession session) {
+		
+		Contact contact = this.contactRepository.findById(cId).get();
+		System.out.println("Contact : "+contact.getcId());
+		
+		//check assignment
+		
+		
+		model.addAttribute("title", contact.getName());
+
+		//remove image
+		//contact.getImage()
+		 // Delete the image file
+		/*
+		 * try { String imageName = contact.getImage(); if
+		 * (!imageName.equals("default.png")) { // don't delete default image String
+		 * uploadPath = new ClassPathResource("static/img").getFile().getAbsolutePath();
+		 * File imageFile = new File(uploadPath + File.separator + imageName); if
+		 * (imageFile.exists()) { imageFile.delete();
+		 * System.out.println("Image deleted: " + imageFile.getAbsolutePath()); } } }
+		 * catch (Exception e) { e.printStackTrace(); }
+		 */
+
+		contact.setUser(null);
+		this.contactRepository.delete(contact);
+		session.setAttribute("message", new Message("Contact deleted successfully!!", "success"));	
+
+		return "redirect:/user/showContact/0";
+	}
+	
+	@GetMapping("/update/{cid}")
+	public String updateContact(@PathVariable("cid") Integer cId, Model model) {
+		
+		Optional<Contact> contactOptional = this.contactRepository.findById(cId);
+		Contact contact = contactOptional.get();
+		this.contactRepository.delete(contact);
+		
+		return "";
+	}
 }
