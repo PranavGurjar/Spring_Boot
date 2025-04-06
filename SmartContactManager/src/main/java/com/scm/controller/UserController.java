@@ -205,13 +205,14 @@ public class UserController {
 		return "redirect:/user/showContact/0";
 	}
 	
-	@GetMapping("/update/{cid}")
-	public String updateContact(@PathVariable("cid") Integer cId, Model model) {
+	//open update form handler
+	@PostMapping("/updateContact/{cid}")
+	public String updateForm(@PathVariable("cid") Integer cId, Model model) {
+		model.addAttribute("title", "Update Contact");
 		
-		Optional<Contact> contactOptional = this.contactRepository.findById(cId);
-		Contact contact = contactOptional.get();
-		this.contactRepository.delete(contact);
+		Contact contact = this.contactRepository.findById(cId).get();
+		model.addAttribute("contact", contact);
 		
-		return "";
+		return "/user/updateForm";
 	}
 }

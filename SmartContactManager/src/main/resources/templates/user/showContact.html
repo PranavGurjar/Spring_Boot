@@ -40,7 +40,10 @@
 					      <td th:text="${c.phone}">+91 8329401951</td>
 					      <td>
 					      	<a href="#" th:onclick="|deleteContact(${c.cId})|" class="btn btn-danger btn-sm">Delete</a> <!-- th:href="@{'/user/delete/'+${c.cId}}" -->
-					      	<a th:href="@{'/user/update/'+${c.cId}}" class="btn btn-primary btn-sm">Update</a>
+					      	
+					      	<form method="post" class="mt-2" th:action="@{'/user/updateContact/'+${c.cId}}" >
+					      		<button type="submit" class="btn btn-primary btn-sm">Update</button>
+					      	</form>
 					      </td>
 					    </tr>
 					    
