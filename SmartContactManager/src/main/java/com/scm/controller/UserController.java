@@ -176,7 +176,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/delete/{cid}")
-	public String deleteContact(@PathVariable("cid") Integer cId, Model model, HttpSession session) {
+	public String deleteContact(@PathVariable("cid") Integer cId, Model model, HttpSession session, Principal principal) {
 		
 		Contact contact = this.contactRepository.findById(cId).get();
 		System.out.println("Contact : "+contact.getcId());
@@ -198,9 +198,15 @@ public class UserController {
 		 * System.out.println("Image deleted: " + imageFile.getAbsolutePath()); } } }
 		 * catch (Exception e) { e.printStackTrace(); }
 		 */
+		
+		User user = this.userRepository.getUserByUserName(principal.getName());
+		user.getContacts().remove(contact);
+		this.userRepository.save(user);
 
-		contact.setUser(null);
-		this.contactRepository.delete(contact);
+//		contact.setUser(null);
+//		this.contactRepository.delete(contact);
+//		
+		
 		System.out.println("Deleted!");
 		session.setAttribute("message", new Message("Contact deleted successfully!!", "success"));	
 
