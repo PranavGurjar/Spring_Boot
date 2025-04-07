@@ -17,6 +17,8 @@
 							<form th:action="@{/user/processUpdate}" th:object="${contact}"
 								enctype="multipart/form-data" method="post" class="mt-2">
 								
+								<input type="hidden" th:value="${contact.cId}" name="cId" />
+								
 								<!-- First Name -->
 								<div class="input-group">
 									<div class="input-group-prepend">

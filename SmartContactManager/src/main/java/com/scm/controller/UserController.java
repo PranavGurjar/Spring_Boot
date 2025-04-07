@@ -201,6 +201,7 @@ public class UserController {
 
 		contact.setUser(null);
 		this.contactRepository.delete(contact);
+		System.out.println("Deleted!");
 		session.setAttribute("message", new Message("Contact deleted successfully!!", "success"));	
 
 		return "redirect:/user/showContact/0";
@@ -219,9 +220,52 @@ public class UserController {
 	
 	//update contact handler
 	@RequestMapping(value = "processUpdate", method = RequestMethod.POST)
-	public String updateHandler(@ModelAttribute Contact contact) {
+	public String updateHandler(@ModelAttribute Contact contact, @RequestParam("imageFile") MultipartFile file, Model model, HttpSession session, Principal principal) {
+		try {
+			
+			Contact oldContactDetails = this.contactRepository.findById(contact.getcId()).get();
+			
+			//image
+			if(!file.isEmpty()) {
+				
+				//file work 
+				//rewrite
+				
+				//delete old photo
+				File deleteFile = new ClassPathResource("/static/images").getFile();
+				File file1 = new File(deleteFile, oldContactDetails.getImage());
+				file1.delete();
+				
+				
+				//update new photo
+				File saveFile = new ClassPathResource("/static/images").getFile();
+				
+				//for file path know
+				Path path = Paths.get(saveFile.getAbsolutePath()+File.separator+file.getOriginalFilename());
+				
+				Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+				
+				contact.setImage(file.getOriginalFilename());
+				
+				
+			}else {
+				contact.setImage(oldContactDetails.getImage());
+			}
+			
+			User user = this.userRepository.getUserByUserName(principal.getName());
+			contact.setUser(user);
+			
+			this.contactRepository.save(contact);
+			
+			session.setAttribute("message", new Message("Your contact is updated!", "success"));
+			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		System.out.println("Contact Id : "+contact.getcId());
 		System.out.println("Contact Name : "+contact.getName());
-		return " ";
+		return "redirect:/user/"+contact.getcId()+"/contact";
 	}
 }
