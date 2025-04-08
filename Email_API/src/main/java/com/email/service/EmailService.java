@@ -17,8 +17,8 @@ public class EmailService {
     public boolean sendEmail(String subject, String message, String to){
         //rest of the code
 
-//        String message = "Hello Dear, This message for security check";
-//        String subject = "PRM : confirmation";
+//        String message = "Hello Dear, This message for check and test api";
+//        String subject = "API Creation Subject";
 //        String to = "pranavmahajan510@gmail.com";
         String from = "emailsendbyuser@gmail.com";
         boolean f = false;
