@@ -274,4 +274,10 @@ public class UserController {
 		System.out.println("Contact Name : "+contact.getName());
 		return "redirect:/user/"+contact.getcId()+"/contact";
 	}
+	
+	//your profile handler
+	@GetMapping("/profile")
+	public String yourProfile() {
+		return "/user/profile";
+	}
 }
