@@ -14,8 +14,8 @@ public class Home {
         return text;
     }
 
-    @RequestMapping("/getUsers")
-    public String getUser(){
-        return "{\'name\' : \'Pranav\'}";
-    }
+//    @RequestMapping("/getUsers")
+//    public String getUser(){
+//        return "{\'name\' : \'Pranav\'}";
+//    }
 }

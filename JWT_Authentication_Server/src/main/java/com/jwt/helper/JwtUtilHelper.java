@@ -20,7 +20,7 @@ public class JwtUtilHelper {
 
     private static final long serialVersionUID = -2550185165626007488L;
 
-    private static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+    private static final long JWT_TOKEN_VALIDITY = 1000 * 60 * 60;
 
     private String SECRET_KEY = "java";
 
