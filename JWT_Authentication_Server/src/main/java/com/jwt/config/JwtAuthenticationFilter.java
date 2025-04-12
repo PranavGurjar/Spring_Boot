@@ -19,6 +19,7 @@ import java.io.IOException;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
+
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
@@ -31,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //Bearer
         //validate
         String requestTokenHeader = request.getHeader("Authorization");
-        String userName=null;
+        String username=null;
         String jwtToken=null;
 
         //null and format
@@ -40,16 +41,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             try{
 
-                userName = this.jwtUtilHelper.getUsernameFromToken(jwtToken);
+                username = this.jwtUtilHelper.getUsernameFromToken(jwtToken);
 
 
             }catch (Exception e){
                 e.printStackTrace();
             }
 
-            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(userName);
+            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
             //security
-            if (userName != null && SecurityContextHolder.getContext().getAuthentication() == null){
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null){
 
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 
