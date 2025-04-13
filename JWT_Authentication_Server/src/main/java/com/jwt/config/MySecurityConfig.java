@@ -25,6 +25,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAuthenticationFilter jwtAuthenticationFilter;
 
+    @Autowired
+    private JwtAuthenticationEntryPoint entryPoint;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -36,7 +39,9 @@ public class MySecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/token").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .exceptionHandling().authenticationEntryPoint(entryPoint);
 
         http.addFilterBefore( jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
     }

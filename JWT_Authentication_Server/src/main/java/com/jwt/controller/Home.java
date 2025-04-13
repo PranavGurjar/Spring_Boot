@@ -1,6 +1,7 @@
 package com.jwt.controller;
 
 
+import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
