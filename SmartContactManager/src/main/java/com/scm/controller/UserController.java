@@ -280,4 +280,13 @@ public class UserController {
 	public String yourProfile() {
 		return "/user/profile";
 	}
+	
+	
+	//open setting handler
+	@GetMapping("/settings")
+	public String openSettings() {
+		return "/user/settings";
+	}
+	
+	
 }
