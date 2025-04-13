@@ -43,6 +43,16 @@
 		<h1>User About : <span th:text="${user.about}"></span></h1>
 		<h1>User Contracts : <span th:text="${user.contacts}"></span></h1>
 		<h1><a href="" th:href="@{/logout}" >Logout</a></h1> -->
+		
+		
+		<script>
+			$(document).ready(() => {
+				$(".item").removeClass("active");
+				$("#home-link").addClass("active");
+			});
+		</script>
+		
+		
 	</section>
 </body>
 </html>

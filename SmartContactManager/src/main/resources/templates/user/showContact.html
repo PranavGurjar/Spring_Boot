@@ -21,8 +21,8 @@
 						</div>
 					</div>
 		
-					
-					<table class="table">
+					<div class="table-responsive">
+					<table class="table table-hover">
 					  <thead class="thead-dark">
 					    <tr>
 					      <th scope="col">#ID</th>
@@ -60,6 +60,7 @@
 					    
 					  </tbody>
 					</table>
+					</div>
 					
 					<nav aria-label="Page navigation example">
 					
@@ -81,6 +82,13 @@
 					
 				</div>
 			</div>
+			
+			<script>
+			$(document).ready(() => {
+				$(".item").removeClass("active");
+				$("#contacts-link").addClass("active");
+			});
+		</script>
 	</section>
 </body>
 </html>
