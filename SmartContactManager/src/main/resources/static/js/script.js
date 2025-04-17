@@ -57,10 +57,11 @@ const paymentStart=()=>{
     // alert("payment started...");
     let amount = $("#payment_field").val();
 	console.log(amount);
-    alert(amount);
+    //alert(amount);
 
     if(amount=="" || amount==null){
-        alert("Amount is required!!");
+        //alert("Amount is required!!");
+		swal("Failed!", "Amount is required!!", "error");
         return;
     }
     
@@ -91,16 +92,45 @@ const paymentStart=()=>{
                         console.log(response.razorpay_order_id);
                         console.log(response.razorpay_signature);
                         console.log("Payment successful !!");
-                        alert("Congrats! Payment successful !!");
+                        //alert("Congrats! Payment successful !!");
+						swal("Good job!", "Congrats! Payment successful !!", "success");
+                    },
+                   "prefill": {
+                        "name": "", 
+                        "email": "",
+                        "contact": "" 
+                    },
+                    "notes": {
+                        "address": "Pranav WebSite"
+                    },
+                    "theme": {
+                        "color": "#3399cc"
                     }
+                };
 
-                }
+                let rzp = new Razorpay(options);
+
+                rzp.on('payment.failed', function (response){
+                    console.log(response.error.code);
+                    console.log(response.error.description);
+                    console.log(response.error.source);
+                    console.log(response.error.step);
+                    console.log(response.error.reason);
+                    console.log(response.error.metadata.order_id);
+                    console.log(response.error.metadata.payment_id);
+                    //alert("Oops payment failed!!");
+					swal("Failed!", "Oops payment failed!!", "error");
+                   });
+                
+                rzp.open();
+
             }
         },
         error:function(error){
             //invoked when error
             console.log(error);
-            alert("something wents wrong!!");
+            //alert("something wents wrong!!");
+			swal("Failed!", "something wents wrong!!", "error");
         }
     }
 
