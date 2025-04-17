@@ -7,11 +7,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.servlet.http.HttpSession;
+import com.razorpay.*;
 
-
+import org.json.JSONObject;
 
 //import javax.transaction.Transactional;
 
@@ -27,9 +29,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.scm.dao.ContactRepository;
@@ -316,6 +320,32 @@ public class UserController {
 		}
 		
 		return "redirect:/user/index";
+	}
+	
+	@PostMapping("/createOrder")
+	@ResponseBody
+	public String createOrder(@RequestBody Map<String, Object> data) throws Exception {
+//		System.out.println("createOrder");
+		System.out.println(data);
+		
+		int amount = Integer.parseInt(data.get("amount").toString());
+		
+		//java 11 allow var
+//		var client = new RazorpayClient("rzp_test_xGyx3FPMpN9fux", "v1cFSCKfW8EncSTHSwRlIH0z");
+		
+		RazorpayClient client = new RazorpayClient("rzp_test_xGyx3FPMpN9fux", "v1cFSCKfW8EncSTHSwRlIH0z");
+		JSONObject ob = new JSONObject();
+		ob.put("amount", amount*100);
+		ob.put("currency", "INR");
+		ob.put("receipt", "txn_235425");
+		
+		//creating new order
+		Order order = client.Orders.create(ob);
+		System.out.println(order);
+		
+		//if you want you can save this to your database
+		
+		return order.toString();
 	}
 	
 }

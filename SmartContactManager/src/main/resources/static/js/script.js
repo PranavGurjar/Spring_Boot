@@ -50,3 +50,58 @@ const search=()=>{
 
     }
 };
+
+
+//first request to server to create order
+const paymentStart=()=>{
+    // alert("payment started...");
+    let amount = $("#payment_field").val();
+	console.log(amount);
+    alert(amount);
+
+    if(amount=="" || amount==null){
+        alert("Amount is required!!");
+        return;
+    }
+    
+    //code
+    //we will use ajax to send request to server to create order - jquery ajax
+    $.ajax({
+        url : '/user/createOrder',
+        data : JSON.stringify({amount:amount, info:'orderRequest'}),
+        contentType : 'application/json',
+        type : "POST",
+        dataType : 'json',
+        success : function(response){
+            //invoked where success
+            console.log(response);
+            if(response.status == "created"){
+                //open payment form
+                let options={
+                    key : "rzp_test_xGyx3FPMpN9fux",
+                    amount : response.amount,
+                    currency : "INR",
+                    name : "Smart Contact Manager",
+                    description : "Donation",
+                    image : "https://www.google.com/imgres?q=profile%20image&imgurl=https%3A%2F%2Fimg.freepik.com%2Ffree-vector%2Fblue-circle-with-white-user_78370-4707.jpg%3Fsemt%3Dais_hybrid%26w%3D740&imgrefurl=https%3A%2F%2Fwww.freepik.com%2Ffree-photos-vectors%2Fprofile&docid=WIYPytbMl_8XfM&tbnid=IXrxgjgj6FwBhM&vet=12ahUKEwiowYrXhd-MAxXHe2wGHQZFPbsQM3oFCIYBEAA..i&w=740&h=740&hcb=2&ved=2ahUKEwiowYrXhd-MAxXHe2wGHQZFPbsQM3oFCIYBEAA",
+                    order_id : response.id,
+
+                    handler:function(response){
+                        console.log(response.razorpay_payment_id);
+                        console.log(response.razorpay_order_id);
+                        console.log(response.razorpay_signature);
+                        console.log("Payment successful !!");
+                        alert("Congrats! Payment successful !!");
+                    }
+
+                }
+            }
+        },
+        error:function(error){
+            //invoked when error
+            console.log(error);
+            alert("something wents wrong!!");
+        }
+    }
+
+)};
