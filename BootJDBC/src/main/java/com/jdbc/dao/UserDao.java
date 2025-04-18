@@ -1,6 +1,7 @@
 package com.jdbc.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -27,5 +28,16 @@ public class UserDao {
         return update;
     }
 
+    // Update user
+    public int updateUser(Integer id, String name, Integer age, String city) {
+        String query = "UPDATE user SET name = ?, age = ?, city = ? WHERE id = ?";
+        return jdbcTemplate.update(query, name, age, city, id);
+    }
+
+    // Delete user
+    public int deleteUser(Integer id) {
+        String query = "DELETE FROM user WHERE id = ?";
+        return jdbcTemplate.update(query, id);
+    }
 
 }

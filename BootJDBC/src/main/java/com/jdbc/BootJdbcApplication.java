@@ -27,6 +27,8 @@ public class BootJdbcApplication implements CommandLineRunner {
 		System.out.println(this.userDao.createTable());
 
 		this.createUser();
+//		this.updateUser();
+//		this.deleteUser();
 	}
 
 	public void createUser() throws IOException {
@@ -49,5 +51,38 @@ public class BootJdbcApplication implements CommandLineRunner {
 		System.out.println(i + " user added!");
 	}
 
+	public void updateUser() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Enter user Id to update: ");
+		int id = Integer.parseInt(br.readLine());
+
+		System.out.println("Enter new user name: ");
+		String name = br.readLine();
+
+		System.out.println("Enter new user age: ");
+		int age = Integer.parseInt(br.readLine());
+
+		System.out.println("Enter new user city: ");
+		String city = br.readLine();
+
+		int i = this.userDao.updateUser(id, name, age, city);
+
+		System.out.println(i + " user updated!");
+	}
+
+
+
+	//delete user
+	public void deleteUser() throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		System.out.println("Enter user Id to delete: ");
+		int id = Integer.parseInt(br.readLine());
+
+		int i = this.userDao.deleteUser(id);
+
+		System.out.println(i + " user deleted!");
+	}
 
 }
