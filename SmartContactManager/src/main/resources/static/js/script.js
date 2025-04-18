@@ -93,7 +93,13 @@ const paymentStart=()=>{
                         console.log(response.razorpay_signature);
                         console.log("Payment successful !!");
                         //alert("Congrats! Payment successful !!");
-						swal("Good job!", "Congrats! Payment successful !!", "success");
+						
+						updatePaymentOnServer(
+                            response.razorpay_payment_id, 
+                            response.razorpay_order_id, 
+                            "paid"
+                        );
+						
                     },
                    "prefill": {
                         "name": "", 
@@ -135,3 +141,21 @@ const paymentStart=()=>{
     }
 
 )};
+
+
+//
+function updatePaymentOnServer(payment_id, order_id, status){
+    $.ajax({
+        url : "/user/updateOrder",
+        data : JSON.stringify({payment_id : payment_id, order_id : order_id, status : status}),
+        contentType : "application/json",
+        type : "POST",
+        dataType : "json",
+        success:function(response){
+            swal("Good job!", "Congrats! Payment successful !!", "success");
+        },
+        error:function(error){
+            swal("Failed!", "Your payment is successful, But we did not get on server, we will contact you as soon as possible", "error");
+        }
+    });
+}
