@@ -49,7 +49,7 @@ public class BatchConfig {
         DefaultLineMapper<Customer> lineMapper = new DefaultLineMapper<>();
 
         DelimitedLineTokenizer lineTokenizer = new DelimitedLineTokenizer();
-        lineTokenizer.setNames(new String[]{"Customer Id", "First Name", "Last Name", "Country"});
+        lineTokenizer.setNames(new String[]{"customerId", "firstName", "lastName", "country"});
         lineTokenizer.setIncludedFields(new int[]{1, 2, 3, 6});
 
         BeanWrapperFieldSetMapper<Customer> fieldSetMapper = new BeanWrapperFieldSetMapper<>();
@@ -70,11 +70,12 @@ public class BatchConfig {
         JdbcBatchItemWriter<Customer> writer = new JdbcBatchItemWriter<>();
 
         writer.setItemSqlParameterSourceProvider(new BeanPropertyItemSqlParameterSourceProvider<>());
-        writer.setSql("INSERT INTO customer (cid, firstname, lastname, country) VALUES (:cid, :firstname, :lastname, :country)");
+        writer.setSql("INSERT INTO customer (cId, firstname, lastname, country) VALUES (:customerId, :firstName, :lastName, :country)");
         writer.setDataSource(this.dataSource);
         return writer;
     }
 
+    @Bean
     public Job importUserJob(){
 
         return this.jobBuilderFactory.get("USER-IMPORT-JOB")

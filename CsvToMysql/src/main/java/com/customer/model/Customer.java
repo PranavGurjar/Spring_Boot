@@ -1,7 +1,7 @@
 package com.customer.model;
 
 public class Customer {
-    private Long cId;
+    private String customerId;
     private String firstName;
     private String lastName;
     private String country;
@@ -9,19 +9,19 @@ public class Customer {
     public Customer() {
     }
 
-    public Customer(Long cId, String firstName, String lastName, String country) {
-        this.cId = cId;
+    public Customer(String customerId, String firstName, String lastName, String country) {
+        this.customerId = customerId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.country = country;
     }
 
-    public Long getcId() {
-        return cId;
+    public String getCustomerId() {
+        return customerId;
     }
 
-    public void setcId(Long cId) {
-        this.cId = cId;
+    public void setCustomerId(String customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
