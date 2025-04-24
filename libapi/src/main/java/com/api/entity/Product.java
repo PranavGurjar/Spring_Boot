@@ -15,15 +15,14 @@ public class Product {
 
     private Double productPrice;
 
+    public Product() {
+    }
+
     public Product(Integer productId, String productName, String productDesc, Double productPrice) {
         this.productId = productId;
         this.productName = productName;
         this.productDesc = productDesc;
         this.productPrice = productPrice;
-    }
-
-
-    public Product() {
     }
 
     public Integer getProductId() {

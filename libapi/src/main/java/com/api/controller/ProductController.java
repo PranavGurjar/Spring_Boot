@@ -20,23 +20,18 @@ public class ProductController {
     private ProductService productService;
 
     @PostMapping("/product/upload")
-    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file) {
-        if (Helper.checkExcelFormat(file)) {
+    public ResponseEntity<?> upload(@RequestParam("file") MultipartFile file){
+        if (Helper.checkExcelFormat(file)){
             //true
-
             this.productService.save(file);
 
-            return ResponseEntity.ok(Map.of("message", "File is uploaded and data is saved to db"));
-
-
+            return ResponseEntity.ok(Map.of("message","File is upload and save in db"));
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file ");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Please upload excel file only");
     }
-
 
     @GetMapping("/product")
-    public List<Product> getAllProduct() {
+    public List<Product> getAllProduct(){
         return this.productService.getAllProducts();
     }
-
 }
