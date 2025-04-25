@@ -44,11 +44,10 @@ public class MySecurityConfig {
 
         http
                 .csrf().disable()
-                .cors() // Let CORS be handled by a configuration bean
-                .and()
-                .authorizeHttpRequests()
-                .requestMatchers(PUBLIC_URLS).permitAll()
-                .requestMatchers(HttpMethod.GET).permitAll()
+                .cors().and()
+                .authorizeRequests()
+                .antMatchers(PUBLIC_URLS).permitAll()
+                .antMatchers(HttpMethod.GET).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(entryPoint)
@@ -69,9 +68,14 @@ public class MySecurityConfig {
 
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder(); // Secure and recommended
+    public PasswordEncoder passwordEncoder(){
+        return NoOpPasswordEncoder.getInstance();
     }
+
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder(); // Secure and recommended
+//    }
 
     @Bean
     public AuthenticationManager authenticationManagerBean(AuthenticationConfiguration configuration) throws Exception {
@@ -126,8 +130,4 @@ public class MySecurityConfig {
     }
      */
 
-    /*
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return NoOpPasswordEncoder.getInstance();
-    }*/
+
