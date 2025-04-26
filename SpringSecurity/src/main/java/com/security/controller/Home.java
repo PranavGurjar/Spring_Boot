@@ -17,6 +17,6 @@ public class Home {
 
     @RequestMapping("/getUsers")
     public String getUser(){
-        return "{\'name\' : \'Pranav\'}";
+        return "[{\'name\' : \'Pranav\'},{\'name\' : \'Pranav\'}]";
     }
 }

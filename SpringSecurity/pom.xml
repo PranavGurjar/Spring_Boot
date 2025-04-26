@@ -55,6 +55,14 @@
 			<version>8.0.33</version>
 		</dependency>
 
+		<!--Jackson Dataformat XML-->
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-xml</artifactId>
+			<version>2.13.4</version>
+		</dependency>
+
+
 		<!-- Dev Tools -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
