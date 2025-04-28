@@ -1,5 +1,6 @@
 package com.multiple.db.mysql.entities;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 

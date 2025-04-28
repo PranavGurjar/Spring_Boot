@@ -1,5 +1,6 @@
 package com.multiple.db.postgresql.entities;
 
+
 import jakarta.persistence.*;
 import lombok.*;
 
