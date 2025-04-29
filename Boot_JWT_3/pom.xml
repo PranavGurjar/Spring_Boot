@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.jwt</groupId>
-	<artifactId>Spring_Boot_JWT_3</artifactId>
+	<artifactId>Boot_JWT_3</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Spring_Boot_JWT_3</name>
+	<name>Boot_JWT_3</name>
 	<description>Jwt Authentication with Spring Boot 3.x.x</description>
 	<url/>
 	<licenses>
