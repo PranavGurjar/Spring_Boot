@@ -18,14 +18,14 @@ public class HomeController {
     private UserService userService;
 
 
-    //http://localhost:8080/home/user
+    //  http://localhost:8080/home/user
     @GetMapping("/user")
     public List<User> getUser(){
         System.out.println("getting users");
         return this.userService.getUsers();
     }
 
-    //http://localhost:8080/home/currentUser
+    //  http://localhost:8080/home/currentUser
     @GetMapping("/currentUser")
     public String getLoggedInUser(Principal principal){
         return principal.getName();
