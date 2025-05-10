@@ -1,7 +1,9 @@
 package com.jwt.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +31,11 @@ public class User implements UserDetails {
     private String password;
 
     private String about;
+
+    @OneToOne(mappedBy = "user")
+    @JsonIgnore
+    private RefreshToken refreshToken;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

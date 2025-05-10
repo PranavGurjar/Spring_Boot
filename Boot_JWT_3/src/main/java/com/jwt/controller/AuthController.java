@@ -1,9 +1,12 @@
 package com.jwt.controller;
 
+import com.jwt.entities.RefreshToken;
 import com.jwt.entities.User;
+import com.jwt.model.RefreshTokenRequest;
 import com.jwt.model.JwtRequest;
 import com.jwt.model.JwtResponse;
 import com.jwt.security.JwtHelper;
+import com.jwt.service.RefreshTokenService;
 import com.jwt.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,6 +34,9 @@ public class AuthController {
     private UserService userService;
 
     @Autowired
+    private RefreshTokenService refreshTokenService;
+
+    @Autowired
     private JwtHelper helper;
 
     private Logger logger = LoggerFactory.getLogger(AuthController.class);
@@ -46,8 +52,11 @@ public class AuthController {
         UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
         String token = this.helper.generateToken(userDetails);
 
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getUsername());
+
         JwtResponse response = JwtResponse.builder()
                 .jwtToken(token)
+                .refreshToken(refreshToken.getRefreshToken())
                 .username(userDetails.getUsername()).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -64,6 +73,19 @@ public class AuthController {
         }
 
     }
+
+    @PostMapping("/refresh")
+    public JwtResponse refreshJwtToken(@RequestBody RefreshTokenRequest request){
+        RefreshToken refreshToken = refreshTokenService.verifyRefreshToken(request.getRefreshToken());
+        User user = refreshToken.getUser();
+        String token = this.helper.generateToken(user);
+
+        return JwtResponse.builder().refreshToken(refreshToken.getRefreshToken())
+                .jwtToken(token)
+                .username(user.getEmail())
+                .build();
+    }
+
 
     @ExceptionHandler(BadCredentialsException.class)
     public String exceptionHandler() {
